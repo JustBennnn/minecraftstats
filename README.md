@@ -1,4 +1,13 @@
 # minecraftstats
+
+[![Downloads](https://pepy.tech/badge/minecraftstats)](https://pepy.tech/project/minecraftstats)
+[![Downloads/Month](https://pepy.tech/badge/minecraftstats/month)](https://pepy.tech/project/minecraftstats)
+[![PyPI Version](https://img.shields.io/pypi/v/minecraftstats)](https://pypi.org/project/minecraftstats/)
+[![Last Commit](https://img.shields.io/github/last-commit/justbennnn/minecraftstats)](https://github.com/JustBennnn/minecraftstats/commits/master)
+[![Repository Size](https://img.shields.io/github/repo-size/justbennnn/minecraftstats)](https://github.com/JustBennnn/minecraftstats)
+[![License MIT](https://img.shields.io/github/license/justbennnn/minecraftstats)](https://github.com/JustBennnn/minecraftstats/blob/master/LICENSE)
+[![Discord Profile](https://img.shields.io/badge/chat-discord-blue)](https://discordapp.com/users/801460768577945681)
+
 Minecraftstats is an API wrapper for the Minecraft server Hypixel. The library only currently allows the user to get
 duel stats.
 
