@@ -5,7 +5,7 @@ This also includes overall duel stats.
 from .errors import StatError
 from .minecraftstats import get_user_stats
 
-overall_functions = [
+overall_duel_functions = [
     "get_recent_games",
     "get_games_played",
     "get_current_winstreak",
@@ -127,7 +127,7 @@ __all__ = [
     "SumoDuelStats",
     "BridgeDuelStats",
     "SkyWarsDuelStats",
-    "overall_functions",
+    "overall_duel_functions",
     "classic_duel_functions",
     "op_duel_functions",
     "uhc_duel_functions",
