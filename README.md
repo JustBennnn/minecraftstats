@@ -86,3 +86,15 @@ print("Total beds broken:", overallStats.beds_broken)
 ```
 
 As shown above, most of the key concepts are the same as the duels stats example.
+
+# CHANGELOG
+
+## 1.0.5
+
+* Created CHANGELOG.
+* Added SkyWars duel stats.
+
+## 1.0.4
+
+* Changed mainframe to Pydantic.
+* Removed the `available_functions` variables.
