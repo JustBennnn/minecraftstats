@@ -9,7 +9,8 @@ from .errors import DataError
 
 __all__ = [
     "set_username",
-    "set_api_key"
+    "set_api_key",
+    "get_user_stats"
 ]
 
 username = ""
