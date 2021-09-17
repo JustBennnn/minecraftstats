@@ -10,7 +10,8 @@ __all__ = [
     "OPDuelStats",
     "UHCDuelStats",
     "SumoDuelStats",
-    "BridgeDuelStats"
+    "BridgeDuelStats",
+    "SkyWarsDuelStats"
 ]
 
 class OverallDuelStats(BaseModel):
@@ -129,3 +130,21 @@ class BridgeDuelStats(BaseModel):
     wins: int = Field(alias="bridge_duel_wins")
     blocks_placed: int = Field(alias="bridge_duel_blocks_placed")
     goals: int = Field(alias="bridge_duel_goals")
+
+class SkyWarsDuelStats(BaseModel):
+    """Skywars duel stats.
+
+    Any stats to do with hearts are measured in halves.
+    """
+    current_winstreak: int = Field(alias="current_winstreak_mode_sw_duel")
+    blocks_placed: int = Field(alias="sw_duel_blocks_placed")
+    damage_dealt: int = Field(alias="sw_duel_damage_dealt")
+    deaths: int = Field(alias="sw_duel_deaths")
+    health_regenerated: int = Field(alias="sw_duel_health_regenerated")
+    losses: int = Field(alias="sw_duel_losses")
+    melee_hits: int = Field(alias="sw_duel_melee_hits")
+    melee_swings: int = Field(alias="sw_duel_melee_swings")
+    games_played: int = Field(alias="sw_duel_rounds_played")
+    best_winstreak: int = Field(alias="best_winstreak_mode_sw_duel")
+    wins: int = Field(alias="sw_duel_wins")
+    kills: int = Field(alias="sw_duel_kills")
