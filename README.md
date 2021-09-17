@@ -9,7 +9,7 @@
 [![Discord Profile](https://img.shields.io/badge/chat-discord-blue)](https://discordapp.com/users/801460768577945681)
 
 Minecraftstats is an API wrapper for the Minecraft server Hypixel. The library only currently allows the user to get
-duel stats.
+duel and bedwars stats.
 
 ## installation
 using [pip](https://pypi.org/project/minecraftstats "")
@@ -29,7 +29,8 @@ python setup.py install
 ## usage
 The following examples show all of the current available functions in minecraftstats.
 
-**Important**: An API key can be obtained by logging onto the Hypixel server, and typing `/api new`.
+**Important**: An API key can be obtained by logging onto the Hypixel server, and typing `/api new`.\
+**Note**: The main framework for this project is [Pydantic](https://github.com/samuelcolvin/pydantic "").
 
 ## duels
 This example shows how to get stats from the duels lobby.
@@ -38,61 +39,50 @@ This example shows how to get stats from the duels lobby.
 import minecraftstats as ms
 
 ms.set_username("your_username")
-ms.set_api_key("c4797b3c-2411-4da8-b81d-5e71d47de1f5")
+ms.set_api_key("your_api_key")
 
-print(ms.overall_duel_functions) #all available functions for overall duel stats
+data = ms.get_user_stats()
+duelData = data["Duels"]
+overallStats = ms.OverallDuelStats(**duelData)
 
-overallStats = ms.OverallDuelStats() #create an instance of the class and call get functions from there
-print("Duel stats info: ")
-print("Most recent gamemode:", overallStats.get_recent_games()[0]) #can go up to 3rd most recent game mode
-print("Total games played:", overallStats.get_games_played())
-print("Current winstreak:", overallStats.get_current_winstreak()) #the winstreak can be from any game mode
-print("Total bow shots:", overallStats.get_bow_shots())
-print("Total bow hits:", overallStats.get_bow_hits())
-print("Coins:", overallStats.get_coins())
-print("Damage Dealt:", overallStats.get_damage_dealt()) 
-print("Total deaths:", overallStats.get_deaths())
-print("Total health regenerated:", overallStats.get_health_regenerated())
-print("Total losses:", overallStats.get_losses())
-print("Total melee hits:", overallStats.get_melee_hits()) 
-print("Total melee swings:", overallStats.get_melee_swings())
-print("Best winstreak:", overallStats.get_best_winstreak())
-print("Total kills:", overallStats.get_kills())
-print("Total wins:", overallStats.get_wins())
-print("Total blocks placed:", overallStats.get_blocks_placed())
-print("Total golden apples eaten:", overallStats.get_golden_apples_eaten())
-print("Total goals:", overallStats.get_goals()) #goals are from bridge duels
+print(list(overallStats.__fields__.keys())) #show all available stats for the OverallDuelStats class
+
+print("Total wins:", overallStats.wins)
+print("Total kills:", overallStats.kills)
+print("Most recent game mode played:", overallStats.recent_games[0])
 ```
+
+> Remember to use the ["Duels"] key to filter the data before you enter it.
 
 > Any stats that return hearts are measured in halves.
 
-The easiest way to retrieve stats is by creating an instance of the `OverallDuelStats` class and use the get functions 
-to get the stats demonstrated in the example.
+The easiest way to retrieve stats is by getting the data returned by the API with `get_user_stats()`, and then passing 
+that as a kwarg into the desired class. Then you can access the stats as attributes to the class.
 
 The next example shows getting stats from an individual game mode in the duels lobby.
 
 ```python
-print(ms.uhc_duel_functions) #all available functions for uhc duel stats
+uhcStats = ms.UHCDuelStats(**duelData)
 
-uhcDuelStats = ms.UHCDuelStats()
-print("Kills:", uhcDuelStats.get_kills())
-print("Wins:", uhcDuelStats.get_wins())
+print(list(uhcStats.__fields__.keys())) #show all available stats for the UHCDuelStats class
+
+print("UHC wins:", uhcStats.wins)
+print("Best UHC winstreak:", uhcStats.best_winstreak)
+print("UHC golden apples eaten", uhcStats.golden_apples_eaten)
 ```
 
 ## bedwars
 This example shows how to get stats from the bedwars lobby.
 
 ```python
-print(ms.overall_bedwars_functions) #all available functions for overall bedwars stats
+bedwarsData = data["Bedwars"]
+overallStats = ms.OverallBedwarsStats(**bedwarsData)
 
-overallStats = ms.OverallBedwarsStats()
-print("Bedwars stats info: ")
-print("Total games played:", overallStats.get_games_played())
-print("Total beds lost:", overallStats.get_beds_lost())
-print("Coins:", overallStats.get_coins())
-print("Total diamonds collected:", overallStats.get_diamonds_collected())
-print("Total wins:", overallStats.get_wins())
-print("Total kills:", overallStats.get_kills())
+print(list(overallStats.__fields__.keys())) #show all available stats for the OverallBedwarsStats class
+
+print("Total wins:", overallStats.wins)
+print("Total kills:", overallStats.kills)
+print("Total beds broken:", overallStats.beds_broken)
 ```
 
 As shown above, most of the key concepts are the same as the duels stats example.
