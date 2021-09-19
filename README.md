@@ -89,6 +89,11 @@ As shown above, most of the key concepts are the same as the duels stats example
 
 # CHANGELOG
 
+## 1.0.6
+
+* Created stats model and kwarg filter(for prefixes/suffixes).
+* Created requirements.txt.
+
 ## 1.0.5
 
 * Created CHANGELOG.
