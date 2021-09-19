@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="minecraftstats",
-    version="1.0.5",
+    version="1.0.6",
     author="JustBen",
     author_email="justben009@gmail.com",
     description="A python library allowing the user to get stats from Hypixel in Minecraft.",
@@ -15,6 +15,7 @@ setup(
     project_urls={
         "Issue Tracker": "https://github.com/JustBennnn/minecraftstats/issues",
     },
+    install_requires=["requests", "pydantic"],
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
