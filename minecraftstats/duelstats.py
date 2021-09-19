@@ -38,6 +38,7 @@ def filter_kwargs(_prefix, _suffix, _game_mode, **kwargs):
     ps_kwargs = {}
     prefix_kwargs = {}
     suffix_kwargs = {}
+    extra_kwargs = {}
 
     completed_values = []
     if _prefix != "" and _suffix != "":
@@ -62,8 +63,13 @@ def filter_kwargs(_prefix, _suffix, _game_mode, **kwargs):
 
                 if k.rfind(_suffix) != -1 and k.rfind(_suffix)+len(_suffix) == len(k):
                     suffix_kwargs[k[0:k.rfind(_suffix)]] = v
+                    completed_values.append(k)
 
-    kwargs = {**ps_kwargs, **prefix_kwargs, **suffix_kwargs}
+    for k, v in kwargs.items():
+        if k not in completed_values:
+            extra_kwargs[k] = v
+
+    kwargs = {**ps_kwargs, **prefix_kwargs, **suffix_kwargs, **extra_kwargs}
     return kwargs
 
 class StatsModel(BaseModel):

@@ -55,6 +55,7 @@ def filter_kwargs(_prefix, _suffix, _game_mode, **kwargs):
 
                 if k.rfind(_suffix) != -1 and k.rfind(_suffix)+len(_suffix) == len(k):
                     suffix_kwargs[k[0:k.rfind(_suffix)]] = v
+                    completed_values.append(k)
 
     for k, v in kwargs.items():
         if k not in completed_values:
