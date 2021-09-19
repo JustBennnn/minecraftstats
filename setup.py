@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="minecraftstats",
-    version="1.0.6",
+    version="1.0.7",
     author="JustBen",
     author_email="justben009@gmail.com",
     description="A python library allowing the user to get stats from Hypixel in Minecraft.",
