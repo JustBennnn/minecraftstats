@@ -30,7 +30,8 @@ python setup.py install
 The following examples show all of the current available functions in minecraftstats.
 
 **Important**: An API key can be obtained by logging onto the Hypixel server, and typing `/api new`.\
-**Note**: The main framework for this project is [Pydantic](https://github.com/samuelcolvin/pydantic "").
+**Note**: The main framework for this project is [Pydantic](https://github.com/samuelcolvin/pydantic "").\
+**Side Note**: Any stats that return hearts are measured in halves.
 
 ## duels
 This example shows how to get stats from the duels lobby.
@@ -38,23 +39,17 @@ This example shows how to get stats from the duels lobby.
 ```python
 import minecraftstats as ms
 
-ms.set_username("your_username")
+ms.set_username("username") #the username for the account that you want to get the stats from
 ms.set_api_key("your_api_key")
 
-data = ms.get_user_stats()
-duelData = data["Duels"]
-overallStats = ms.OverallDuelStats(**duelData)
+stats = ms.get_user_stats()
 
-print(list(overallStats.__fields__.keys())) #show all available stats for the OverallDuelStats class
+print(list(stats.overall_duels.__fields__.keys())) #show all available functions for overall_duels
 
-print("Total wins:", overallStats.wins)
-print("Total kills:", overallStats.kills)
-print("Most recent game mode played:", overallStats.recent_games[0])
+print("Total wins:", stats.overall_duels.wins)
+print("Total kills:", stats.overall_duels.kills)
+print("Most recent game mode played:", stats.overall_duels.recent_games[0])
 ```
-
-> Remember to use the ["Duels"] key to filter the data before you enter it.
-
-> Any stats that return hearts are measured in halves.
 
 The easiest way to retrieve stats is by getting the data returned by the API with `get_user_stats()`, and then passing 
 that as a kwarg into the desired class. Then you can access the stats as attributes to the class.
@@ -62,32 +57,32 @@ that as a kwarg into the desired class. Then you can access the stats as attribu
 The next example shows getting stats from an individual game mode in the duels lobby.
 
 ```python
-uhcStats = ms.UHCDuelStats(**duelData)
+print(list(stats.uhc_duels.__fields__.keys())) #show all available stats for uhc_duels
 
-print(list(uhcStats.__fields__.keys())) #show all available stats for the UHCDuelStats class
-
-print("UHC wins:", uhcStats.wins)
-print("Best UHC winstreak:", uhcStats.best_winstreak)
-print("UHC golden apples eaten", uhcStats.golden_apples_eaten)
+print("UHC wins:", stats.uhc_duels.wins)
+print("Best UHC winstreak:", stats.uhc_duels.best_winstreak)
+print("UHC golden apples eaten", stats.uhc_duels.golden_apples_eaten)
 ```
 
 ## bedwars
 This example shows how to get stats from the bedwars lobby.
 
 ```python
-bedwarsData = data["Bedwars"]
-overallStats = ms.OverallBedwarsStats(**bedwarsData)
+print(list(stats.overall_bedwars.__fields__.keys())) #show all available functions for overall_bedwars
 
-print(list(overallStats.__fields__.keys())) #show all available stats for the OverallBedwarsStats class
-
-print("Total wins:", overallStats.wins)
-print("Total kills:", overallStats.kills)
-print("Total beds broken:", overallStats.beds_broken)
+print("Total wins:", stats.overall_bedwars.wins)
+print("Total kills:", stats.overall_bedwars.kills)
+print("Total beds broken:", stats.overall_bedwars.beds_broken)
 ```
 
 As shown above, most of the key concepts are the same as the duels stats example.
 
 # CHANGELOG
+
+## 1.0.8
+
+* The user no longer has to create an instance of the class model.
+* Fixed bridge_duel suffix typo.
 
 ## 1.0.7
 
@@ -105,5 +100,5 @@ As shown above, most of the key concepts are the same as the duels stats example
 
 ## 1.0.4
 
-* Changed mainframe to Pydantic.
+* Changed mainframe to [Pydantic](https://github.com/samuelcolvin/pydantic "").
 * Removed the `available_functions` variables.
