@@ -1,5 +1,15 @@
 """Utils file for extra functions."""
+from pydantic import BaseModel
+
 __all__ = []
+
+class StatsModel(BaseModel):
+    """Base Model for other classes."""
+    _prefix: str = ""
+    _suffix: str = ""
+    _game_mode: str = ""
+    def __init__(self, **kwargs):
+        super().__init__(**filter_kwargs(self._prefix, self._suffix, _game_modes, self._game_mode, **kwargs))
 
 def filter_kwargs(_prefix, _suffix, _game_modes, _game_mode="", **kwargs):
     """Filter the kwargs to the specific gamemode and remove any prefixes or suffixes."""

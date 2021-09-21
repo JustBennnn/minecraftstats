@@ -4,7 +4,7 @@ This also includes overall bedwars stats.
 """
 from pydantic import BaseModel, Field
 
-from .utils import filter_kwargs
+from .utils import filter_kwargs, StatsModel
 
 __all__ = []
 
@@ -15,14 +15,6 @@ _game_modes = [
     "two_four",
     "four_three"
 ]
-
-class StatsModel(BaseModel):
-    """Base Model for other classes."""
-    _prefix: str = ""
-    _suffix: str = ""
-    _game_mode: str = ""
-    def __init__(self, **kwargs):
-        super().__init__(**filter_kwargs(self._prefix, self._suffix, _game_modes, self._game_mode, **kwargs))
 
 class OverallBedwarsStats(StatsModel):
     """Overall bedwars stats."""

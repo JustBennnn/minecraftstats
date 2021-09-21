@@ -4,7 +4,7 @@ This also includes overall duel stats.
 """
 from pydantic import BaseModel, Field
 
-from .utils import filter_kwargs
+from .utils import filter_kwargs, StatsModel
 
 __all__ = []
 

@@ -79,6 +79,10 @@ As shown above, most of the key concepts are the same as the duels stats example
 
 # CHANGELOG
 
+## 1.0.9
+
+* Added `StatsModel` class to `utils.py`.
+
 ## 1.0.8
 
 * The user no longer has to create an instance of the class model.
