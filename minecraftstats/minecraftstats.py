@@ -3,8 +3,19 @@
 Functions include getting duel and bedwars stats.
 """
 import requests
+from pydantic import BaseModel
 from typing import Any, Dict
 
+from .bedwarsstats import OverallBedwarsStats
+from .duelstats import (
+    BridgeDuelStats, 
+    ClassicDuelStats, 
+    OPDuelStats, 
+    OverallDuelStats, 
+    SkyWarsDuelStats, 
+    SumoDuelStats, 
+    UHCDuelStats
+)
 from .errors import DataError
 
 __all__ = [
@@ -41,7 +52,33 @@ def get_user_stats() -> Dict[str, Any]:
         if data["success"] == False:
             raise DataError(f"Unable to retrieve data. Cause: {data['cause']}.")
         else:
-            return data["player"]["stats"]
+            data = data["player"]["stats"]
+            duelData = data["Duels"]
+            bedwarsData = data["Bedwars"]
 
+            stats_object = MinecraftStats(
+                overall_duels=duelData,
+                classic_duels=duelData,
+                op_duels=duelData,
+                uhc_duels=duelData,
+                sumo_duels=duelData,
+                bridge_duels=duelData,
+                skywars_duels=duelData,
+                overall_bedwars=bedwarsData
+            )
+
+            return stats_object
     else:
-        raise DataError("Username and/or API key must not be none.")    
+        raise DataError("Username and/or API key must not be none.")
+
+class MinecraftStats(BaseModel):
+    """Container class for all stats."""
+    overall_duels: OverallDuelStats
+    classic_duels: ClassicDuelStats 
+    op_duels: OPDuelStats
+    uhc_duels: UHCDuelStats
+    sumo_duels: SumoDuelStats
+    bridge_duels: BridgeDuelStats
+    skywars_duels: SkyWarsDuelStats
+
+    overall_bedwars: OverallBedwarsStats
