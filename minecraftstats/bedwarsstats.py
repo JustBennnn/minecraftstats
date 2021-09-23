@@ -3,12 +3,13 @@
 This also includes overall bedwars stats.
 """
 from pydantic import BaseModel, Field
+from typing import Any, Dict
 
 from .utils import filter_kwargs, StatsModel
 
 __all__ = []
 
-_game_modes = [
+game_modes = [
     "eight_one",
     "eight_two",
     "four_four",
@@ -19,8 +20,11 @@ _game_modes = [
 class OverallBedwarsStats(StatsModel):
     """Overall bedwars stats."""
     _suffix: str = "_bedwars"
+    _game_modes = game_modes
 
     games_played: int = 0
+    items_purchased: int = 0
+    permanent_items_purchased: int = 0
     beds_lost: int = 0
     coins: int = 0
     deaths: int = 0
@@ -48,3 +52,43 @@ class OverallBedwarsStats(StatsModel):
     fall_damage_kills: int = Field(0, alias="fall_kills")
     fall_damage_final_deaths: int = Field(0, alias="fall_final_deaths")
     fall_damage_final_kills: int = Field(0, alias="fall_final_kills")
+
+class PracticeBedwarsStats(BaseModel):
+    """Practice mode stats."""
+    selected_mode: str = Field("", alias="selected")
+    records_object: Dict[str, int] = Field({}, alias="records")
+    bridging_object: Dict[str, int] = Field({}, alias="bridging")
+    mlg_object: Dict[str, int] = Field({}, alias="mlg")
+    fireball_jumping_object: Dict[str, int] = Field({}, alias="fireball_jumping")
+
+    class Records(BaseModel):
+        bridging_record_object: int = Field(0, alias="bridging_distance_30:elevation_NONE:angle_STRAIGHT:")
+        @property
+        def bridging_record(self):
+            return self.bridging_record_object / 1000
+
+    class BridgingStats(BaseModel):
+        blocks_placed: int = 0
+        failed_attempts: int = 0
+        successful_attempts: int = 0
+
+    class MLGStats(BaseModel):
+        failed_attempts: int = 0
+        successful_attempts: int = 0
+
+    class FireballJumpingStats(BaseModel):
+        successful_attempts: int = 0
+        failed_attempts: int = 0
+
+    @property
+    def records(self):
+        return self.Records(**self.records_object)
+    @property
+    def bridging(self):
+        return self.BridgingStats(**self.bridging_object)
+    @property
+    def mlg(self):
+        return self.MLGStats(**self.mlg_object)
+    @property
+    def fireball_jumping(self):
+        return self.FireballJumpingStats(**self.fireball_jumping_object)
