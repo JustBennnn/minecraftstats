@@ -79,6 +79,11 @@ As shown above, most of the key concepts are the same as the duels stats example
 
 # CHANGELOG
 
+## 1.1.0
+
+* Added Bedwars Practice stats.
+* Minor changes to `utils.py`.
+
 ## 1.0.9
 
 * Added `StatsModel` class to `utils.py`.
