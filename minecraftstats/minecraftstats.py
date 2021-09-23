@@ -6,7 +6,10 @@ import requests
 from pydantic import BaseModel
 from typing import Any, Dict
 
-from .bedwarsstats import OverallBedwarsStats
+from .bedwarsstats import (
+    OverallBedwarsStats,
+    PracticeBedwarsStats
+)
 from .duelstats import (
     BridgeDuelStats, 
     ClassicDuelStats, 
@@ -64,7 +67,8 @@ def get_user_stats() -> Dict[str, Any]:
                 sumo_duels=duelData,
                 bridge_duels=duelData,
                 skywars_duels=duelData,
-                overall_bedwars=bedwarsData
+                overall_bedwars=bedwarsData,
+                practice_bedwars=bedwarsData["practice"]
             )
 
             return stats_object
@@ -82,3 +86,4 @@ class MinecraftStats(BaseModel):
     skywars_duels: SkyWarsDuelStats
 
     overall_bedwars: OverallBedwarsStats
+    practice_bedwars: PracticeBedwarsStats
