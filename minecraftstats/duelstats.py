@@ -8,7 +8,7 @@ from .utils import filter_kwargs, StatsModel
 
 __all__ = []
 
-_game_modes = [
+game_modes = [
     "classic",
     "op",
     "uhc",
@@ -16,14 +16,6 @@ _game_modes = [
     "bridge",
     "sw"
 ]
-
-class StatsModel(BaseModel):
-    """Base Model for other classes."""
-    _prefix: str = ""
-    _suffix: str = ""
-    _game_mode: str = ""
-    def __init__(self, **kwargs):
-        super().__init__(**filter_kwargs(self._prefix, self._suffix, _game_modes, self._game_mode, **kwargs))
 
 class OverallDuelStats(BaseModel):
     """Overall duel stats.
@@ -60,6 +52,7 @@ class ClassicDuelStats(StatsModel):
     _prefix: str = "classic_duel_"
     _suffix: str = "_mode_classic_duel"
     _game_mode: str = "classic_duel"
+    _game_modes = game_modes
 
     current_winstreak: int = 0
     bow_shots: int = 0
@@ -83,6 +76,7 @@ class OPDuelStats(StatsModel):
     _prefix: str = "op_duel_"
     _suffix: str = "_mode_op_duel"
     _game_mode: str = "op_duel"
+    _game_modes = game_modes
 
     current_winstreak: int = 0
     damage_dealt: int = 0
@@ -104,6 +98,7 @@ class UHCDuelStats(StatsModel):
     _prefix: str = "uhc_duel_"
     _suffix: str = "_mode_uhc_duel"
     _game_mode: str = "uhc_duel"
+    _game_modes = game_modes
 
     current_winstreak: int = 0
     bow_shots: int = 0
@@ -126,6 +121,7 @@ class SumoDuelStats(StatsModel):
     _prefix: str = "sumo_duel_"
     _suffix: str = "_mode_sumo_duel"
     _game_mode: str = "sumo_duel"
+    _game_modes = game_modes
 
     current_winstreak: int = 0
     deaths: int = 0
@@ -145,6 +141,7 @@ class BridgeDuelStats(StatsModel):
     _prefix: str = "bridge_duel_"
     _suffix: str = "_mode_bridge_duel"
     _game_mode: str = "bridge_duel"
+    _game_modes = game_modes
 
     current_winstreak: int = 0
     bow_shots: int = 0
@@ -170,6 +167,7 @@ class SkyWarsDuelStats(StatsModel):
     _prefix: str = "sw_duel_"
     _suffix: str = "_mode_sw_duel"
     _game_mode: str = "sw_duel"
+    _game_modes = game_modes
 
     current_winstreak: int = 0
     blocks_placed: int = 0
