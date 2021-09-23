@@ -1,5 +1,6 @@
 """Utils file for extra functions."""
 from pydantic import BaseModel
+from typing import List
 
 __all__ = []
 
@@ -9,9 +10,9 @@ class StatsModel(BaseModel):
     _suffix: str = ""
     _game_mode: str = ""
     def __init__(self, **kwargs):
-        super().__init__(**filter_kwargs(self._prefix, self._suffix, _game_modes, self._game_mode, **kwargs))
+        super().__init__(**filter_kwargs(self._prefix, self._suffix, self._game_modes, self._game_mode, **kwargs))
 
-def filter_kwargs(_prefix, _suffix, _game_modes, _game_mode="", **kwargs):
+def filter_kwargs(_prefix, _suffix, _game_modes, _game_mode="", **kwargs) -> dict:
     """Filter the kwargs to the specific gamemode and remove any prefixes or suffixes."""
     breaker = False
     filtered_kwargs = {}
