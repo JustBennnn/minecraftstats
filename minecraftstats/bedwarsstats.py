@@ -92,3 +92,11 @@ class PracticeBedwarsStats(BaseModel):
     @property
     def fireball_jumping(self):
         return self.FireballJumpingStats(**self.fireball_jumping_object)
+
+class CosmeticBedwarsStats(BaseModel):
+    """Bedwars cosmetic stats."""
+    projectile_trail: str = Field("", alias="activeProjectileTrail")
+    victory_dance: str = Field("", alias="activeVictoryDance")
+    bed_destroy: str = Field("", alias="activeBedDestroy")
+    kill_message: str = Field("", alias="activeKillMessages")
+    glyph: str = Field("", alias="activeGlyph")
