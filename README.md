@@ -79,9 +79,13 @@ As shown above, most of the key concepts are the same as the duels stats example
 
 # CHANGELOG
 
+## 1.1.1
+
+* Added Bedwars cosmetic stats.
+
 ## 1.1.0
 
-* Added Bedwars Practice stats.
+* Added Bedwars practice stats.
 * Minor changes to `utils.py`.
 
 ## 1.0.9
