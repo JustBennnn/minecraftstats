@@ -181,3 +181,56 @@ class SkyWarsDuelStats(StatsModel):
     best_winstreak: int = 0
     wins: int = 0
     kills: int = 0
+
+#Doubles Stats
+class UHCDoubleStats(StatsModel):
+    """UHC doubles stats.
+    
+    Any stats to do with hearts are measured in halves.
+    """
+    _prefix: str = "uhc_doubles_"
+    _suffix: str = "_mode_uhc_doubles"
+    _game_mode: str = "uhc_doubles"
+    _game_modes = game_modes
+
+    current_winstreak: int = 0
+    blocks_placed: int = 0
+    bow_hits: int = 0
+    bow_shots: int = 0
+    damage_dealt: int = 0
+    deaths: int = 0
+    golden_apples_eaten: int = 0
+    health_regenerated: int = 0
+    losses: int = 0
+    melee_hits: int = 0
+    melee_swings: int = 0
+    rounds_played: int = 0
+    best_winstreak: int = 0
+    kills: int = 0
+    wins: int = 0
+
+class BridgeDoubleStats(StatsModel):
+    """Bridge doubles stats.
+    
+    Any stats to do with hearts are measured in halves.
+    """
+    _prefix: str = "bridge_doubles_"
+    _suffix: str = "_mode_bridge_doubles"
+    _game_mode: str = "bridge_doubles"
+    _game_modes = game_modes
+
+    current_winstreak: int = 0
+    blocks_placed: int = 0
+    bow_hits: int = 0
+    bow_shots: int = 0
+    deaths: int = Field(0, alias="bridge_deaths")
+    kills: int = Field(0, alias="bridge_kills")
+    damage_dealt: int = 0
+    goals: int = 0
+    health_regenerated: int = 0
+    losses: int = 0
+    melee_hits: int = 0
+    melee_swings: int = 0
+    games_played: int = Field(0, alias="rounds_played")
+    best_winstreak: int = 0
+    wins: int = 0
