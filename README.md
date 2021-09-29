@@ -79,6 +79,10 @@ As shown above, most of the key concepts are the same as the duels stats example
 
 # CHANGELOG
 
+## 1.1.2
+
+* Added UHC and Bridge double stats.
+
 ## 1.1.1
 
 * Added Bedwars cosmetic stats.
