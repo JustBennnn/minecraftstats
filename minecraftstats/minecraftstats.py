@@ -59,6 +59,7 @@ def get_user_stats() -> Dict[str, Any]:
             data = data["player"]["stats"]
             duelData = data["Duels"]
             bedwarsData = data["Bedwars"]
+            bedwarsPracticeData = bedwarsData.get("practice", {})
 
             stats_object = MinecraftStats(
                 overall_duels=duelData,
@@ -69,7 +70,7 @@ def get_user_stats() -> Dict[str, Any]:
                 bridge_duels=duelData,
                 skywars_duels=duelData,
                 overall_bedwars=bedwarsData,
-                practice_bedwars=bedwarsData["practice"],
+                practice_bedwars=bedwarsPracticeData,
                 cosmetics_bedwars=bedwarsData
             )
 
