@@ -1,11 +1,8 @@
 from setuptools import setup
 
-with open("requirements.txt", "r", encoding="utf-8") as requirements_file:
-    install_requires = requirements_file.read().splitlines()
-
 setup(
     name="minecraftstats",
-    version="1.1.4",
+    version="1.1.3",
     author="JustBen",
     author_email="justben009@gmail.com",
     description="A python library allowing the user to get stats from Hypixel in Minecraft.",
@@ -18,7 +15,7 @@ setup(
     project_urls={
         "Issue Tracker": "https://github.com/JustBennnn/minecraftstats/issues",
     },
-    install_requires=install_requires,
+    install_requires=["requests", "pydantic", "mojang"],
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
