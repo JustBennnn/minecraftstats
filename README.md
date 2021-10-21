@@ -27,14 +27,33 @@ python setup.py install
 ```
 
 ## usage
-The following examples show all of the current available functions in minecraftstats.
 
 **Important**: An API key can be obtained by logging onto the Hypixel server, and typing `/api new`.\
 **Note**: The main framework for this project is [Pydantic](https://github.com/samuelcolvin/pydantic "").\
 **Side Note**: Any stats that return hearts are measured in halves.
 
+## general
+This example shows how to access general data from the Hypixel lobby.
+
+```python
+import minecraftstats as ms
+
+ms.set_username("username") #the username for the account that you want to get the stats from
+ms.set_api_key("your_api_key")
+
+stats = ms.get_user_stats()
+
+print(list(stats.general.__fields__.keys())) #show all available attributes for general stats
+
+first_login = stats.general.first_login #returns a datetime object
+print("First login (day/month/year):", str(first_login.day) + "/" + str(first_login.month) + "/" + str(first_login.year))
+print("Achievements:", stats.general.achievements)
+print("Hypixel level:", stats.general.level)
+```
+
+The next set of examples will show how to get stats from different game modes.
+
 ## duels
-This example shows how to get stats from the duels lobby.
 
 ```python
 import minecraftstats as ms
@@ -51,10 +70,10 @@ print("Total kills:", stats.overall_duels.kills)
 print("Most recent game mode played:", stats.overall_duels.recent_games[0])
 ```
 
-The easiest way to retrieve stats is by getting the data returned by the API with `get_user_stats()`, and then passing 
-that as a kwarg into the desired class. Then you can access the stats as attributes to the class.
+The best way to retrieve stats is by creating a variable which uses `ms.get_user_stats()` to get the Hypixel 
+user's data, and then accessing different stats as attributes to the variable.
 
-The next example shows getting stats from an individual game mode in the duels lobby.
+The next examples show how those attributes can be accessed.
 
 ```python
 print(list(stats.uhc_duels.__fields__.keys())) #show all available stats for uhc_duels
@@ -65,7 +84,6 @@ print("UHC golden apples eaten", stats.uhc_duels.golden_apples_eaten)
 ```
 
 ## bedwars
-This example shows how to get stats from the bedwars lobby.
 
 ```python
 print(list(stats.overall_bedwars.__fields__.keys())) #show all available functions for overall_bedwars
@@ -75,9 +93,36 @@ print("Total kills:", stats.overall_bedwars.kills)
 print("Total beds broken:", stats.overall_bedwars.beds_broken)
 ```
 
-As shown above, most of the key concepts are the same as the duels stats example.
+As shown above, all of the key concepts are the same as the duels stats example.
+
+## bedwars practice mode
+
+```python
+print(list(stats.practice_bedwars.__fields__.keys())) #show all available functions for practice_bedwars
+
+print("Bridging record:", stats.practice_bedwars.records.bridging_record)
+print("Bridging blocks placed:", stats.practice_bedwars.bridging.blocks_placed)
+print("Successful MLG attempts:",stats.practice_bedwars.mlg.successful_attempts)
+```
+
+## skywars 
+
+```python 
+print(list(stats.overall_skywars.__fields__.keys()))
+
+print("Wins:", stats.overall_skywars.wins)
+print("Games played:", stats.overall_skywars.games_played)
+print("Coins:", stats.overall_skywars.coins)
+```
 
 # CHANGELOG
+
+## 1.1.4
+
+* Created a General Hypixel stats file.
+* Removed unnecessary imports from `__init__.py`.
+* Updated annotations on several files.
+* Added [`mojang`](https://github.com/summer/mojang "") library to `requirements.txt`.
 
 ## 1.1.3
 
@@ -94,7 +139,7 @@ As shown above, most of the key concepts are the same as the duels stats example
 ## 1.1.0
 
 * Added Bedwars practice stats.
-* Minor changes to `utils.py`.
+* Small changes to `utils.py`.
 
 ## 1.0.9
 
@@ -121,5 +166,5 @@ As shown above, most of the key concepts are the same as the duels stats example
 
 ## 1.0.4
 
-* Changed mainframe to [Pydantic](https://github.com/samuelcolvin/pydantic "").
+* Changed mainframe to [`Pydantic`](https://github.com/samuelcolvin/pydantic "").
 * Removed the `available_functions` variables.
