@@ -2,6 +2,7 @@
 
 Functions include getting duel and bedwars stats.
 """
+from mojang import MojangAPI
 import requests
 from pydantic import BaseModel
 from typing import Any, Dict
@@ -19,6 +20,12 @@ from .duelstats import (
     SkyWarsDuelStats, 
     SumoDuelStats, 
     UHCDuelStats
+)
+from .generalstats import (
+    GeneralStats
+)
+from .skywarsstats import (
+    OverallSkywarsStats
 )
 from .errors import DataError
 
@@ -52,16 +59,20 @@ def set_api_key(apikey) -> None:
 def get_user_stats() -> Dict[str, Any]:
     """Get the user stats with the set username and api key."""
     if username != "" and api_key != "":
-        data = requests.get(f"https://api.hypixel.net/player?key={api_key}&name={username}").json()
+        uuid = MojangAPI.get_uuid(username)
+        data = requests.get(f"https://api.hypixel.net/player?key={api_key}&uuid={uuid}").json()
         if data["success"] == False:
             raise DataError(f"Unable to retrieve data. Cause: {data['cause']}.")
         else:
-            data = data["player"]["stats"]
-            duelData = data["Duels"]
-            bedwarsData = data["Bedwars"]
+            data = data["player"]
+            statsData = data["stats"]
+            duelData = statsData["Duels"]
+            bedwarsData = statsData["Bedwars"]
             bedwarsPracticeData = bedwarsData.get("practice", {})
+            skywarsData = statsData["SkyWars"]
 
             stats_object = MinecraftStats(
+                general=data,
                 overall_duels=duelData,
                 classic_duels=duelData,
                 op_duels=duelData,
@@ -71,7 +82,8 @@ def get_user_stats() -> Dict[str, Any]:
                 skywars_duels=duelData,
                 overall_bedwars=bedwarsData,
                 practice_bedwars=bedwarsPracticeData,
-                cosmetics_bedwars=bedwarsData
+                cosmetics_bedwars=bedwarsData,
+                overall_skywars=skywarsData
             )
 
             return stats_object
@@ -80,6 +92,7 @@ def get_user_stats() -> Dict[str, Any]:
 
 class MinecraftStats(BaseModel):
     """Container class for all stats."""
+    general: GeneralStats
     overall_duels: OverallDuelStats
     classic_duels: ClassicDuelStats 
     op_duels: OPDuelStats
@@ -87,7 +100,7 @@ class MinecraftStats(BaseModel):
     sumo_duels: SumoDuelStats
     bridge_duels: BridgeDuelStats
     skywars_duels: SkyWarsDuelStats
-
     overall_bedwars: OverallBedwarsStats
     practice_bedwars: PracticeBedwarsStats
     cosmetics_bedwars: CosmeticBedwarsStats
+    overall_skywars: OverallSkywarsStats
