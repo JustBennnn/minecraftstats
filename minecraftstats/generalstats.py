@@ -1,6 +1,7 @@
 """General stats for Hypixel.
 """
 import datetime
+import math
 from pydantic import BaseModel, Field
 from typing import Any, Dict
 
@@ -19,15 +20,25 @@ class GeneralStats(BaseModel):
     def latest_login(self) -> datetime.datetime:
         return datetime.datetime.fromtimestamp(self.latest_login_object // 1000)
 
-    achievement_points: int = Field(0, alias="achievementPoints")
-    bedwars_level: int = 0
-    wins: int = 0
+    achievements: int = Field(0, alias="achievementPoints")
     most_recent_game_mode_object: str = Field("", alias="mostRecentGameType")
     @property 
     def most_recent_game_mode(self):
         return self.most_recent_game_mode_object.lower()
 
-    challenges_object: Dict[Any, Any] = Field({}, alias="challenges")
+    achievements_object: Dict[Any, Any] = Field({}, alias="achievements")
+    class AchievementStats(BaseModel):
+        bedwars_level: int = 0
+        bedwars_wins: int = 0
+        general_wins: int = 0
+
     @property
-    def karma(self):
-        return self.challenges_object["karma"]
+    def achivements(self) -> AchievementStats:
+        return self.AchievementStats(**self.achievements_object)
+
+    experience: int = Field(0, alias="networkExp")
+    @property
+    def level(self):
+        return math.floor((math.sqrt((2 * self.experience) + 30625) / 50) - 2.5)
+
+    karma: int = 0
