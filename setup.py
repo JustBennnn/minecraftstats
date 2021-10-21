@@ -1,5 +1,8 @@
 from setuptools import setup
 
+with open("requirements.txt", "r", encoding="utf-8") as requirements_file:
+    install_requires = requirements_file.read().splitlines()
+
 setup(
     name="minecraftstats",
     version="1.1.4",
@@ -15,7 +18,7 @@ setup(
     project_urls={
         "Issue Tracker": "https://github.com/JustBennnn/minecraftstats/issues",
     },
-    install_requires=open("requirements.txt", "r", encoding="utf-8").read().splitlines(),
+    install_requires=install_requires,
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
