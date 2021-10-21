@@ -1,11 +1,11 @@
-"""All stats for bedwars.
+"""Stats for bedwars.
 
 This also includes overall bedwars stats.
 """
 from pydantic import BaseModel, Field
-from typing import Any, Dict
+from typing import Dict, List
 
-from .utils import filter_kwargs, StatsModel
+from .utils import StatsModel
 
 __all__ = []
 
@@ -20,7 +20,7 @@ game_modes = [
 class OverallBedwarsStats(StatsModel):
     """Overall bedwars stats."""
     _suffix: str = "_bedwars"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     games_played: int = 0
     items_purchased: int = 0
@@ -54,7 +54,7 @@ class OverallBedwarsStats(StatsModel):
     fall_damage_final_kills: int = Field(0, alias="fall_final_kills")
 
 class PracticeBedwarsStats(BaseModel):
-    """Practice mode stats."""
+    """Practice mode stats. Doesn't inherit from the stats model because nothing needs to be filtered."""
     selected_mode: str = Field("", alias="selected")
     records_object: Dict[str, int] = Field({}, alias="records")
     bridging_object: Dict[str, int] = Field({}, alias="bridging")
@@ -64,7 +64,7 @@ class PracticeBedwarsStats(BaseModel):
     class Records(BaseModel):
         bridging_record_object: int = Field(0, alias="bridging_distance_30:elevation_NONE:angle_STRAIGHT:")
         @property
-        def bridging_record(self):
+        def bridging_record(self) -> int:
             return self.bridging_record_object / 1000
 
     class BridgingStats(BaseModel):
@@ -81,20 +81,20 @@ class PracticeBedwarsStats(BaseModel):
         failed_attempts: int = 0
 
     @property
-    def records(self):
+    def records(self) -> Records:
         return self.Records(**self.records_object)
     @property
-    def bridging(self):
+    def bridging(self) -> BridgingStats:
         return self.BridgingStats(**self.bridging_object)
     @property
-    def mlg(self):
+    def mlg(self) -> MLGStats:
         return self.MLGStats(**self.mlg_object)
     @property
-    def fireball_jumping(self):
+    def fireball_jumping(self) -> FireballJumpingStats:
         return self.FireballJumpingStats(**self.fireball_jumping_object)
 
 class CosmeticBedwarsStats(BaseModel):
-    """Bedwars cosmetic stats."""
+    """Bedwars cosmetic stats. Doesn't inherit from the stats model because nothing needs to be filtered."""
     projectile_trail: str = Field("", alias="activeProjectileTrail")
     victory_dance: str = Field("", alias="activeVictoryDance")
     bed_destroy: str = Field("", alias="activeBedDestroy")
