@@ -1,10 +1,11 @@
-"""All stats for duels.
+"""Stats for duels.
 
 This also includes overall duel stats.
 """
 from pydantic import BaseModel, Field
+from typing import List
 
-from .utils import filter_kwargs, StatsModel
+from .utils import StatsModel
 
 __all__ = []
 
@@ -21,6 +22,7 @@ class OverallDuelStats(BaseModel):
     """Overall duel stats.
     
     Any stat to do with hearts is measured in halves.
+    Doesn't inherit from the stats model because nothing needs to be filtered.
     """
     recent_games_object: str = Field("", alias="duels_recently_played2")
     @property
@@ -52,7 +54,7 @@ class ClassicDuelStats(StatsModel):
     _prefix: str = "classic_duel_"
     _suffix: str = "_mode_classic_duel"
     _game_mode: str = "classic_duel"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     current_winstreak: int = 0
     bow_shots: int = 0
@@ -76,7 +78,7 @@ class OPDuelStats(StatsModel):
     _prefix: str = "op_duel_"
     _suffix: str = "_mode_op_duel"
     _game_mode: str = "op_duel"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     current_winstreak: int = 0
     damage_dealt: int = 0
@@ -98,7 +100,7 @@ class UHCDuelStats(StatsModel):
     _prefix: str = "uhc_duel_"
     _suffix: str = "_mode_uhc_duel"
     _game_mode: str = "uhc_duel"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     current_winstreak: int = 0
     bow_shots: int = 0
@@ -121,7 +123,7 @@ class SumoDuelStats(StatsModel):
     _prefix: str = "sumo_duel_"
     _suffix: str = "_mode_sumo_duel"
     _game_mode: str = "sumo_duel"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     current_winstreak: int = 0
     deaths: int = 0
@@ -141,7 +143,7 @@ class BridgeDuelStats(StatsModel):
     _prefix: str = "bridge_duel_"
     _suffix: str = "_mode_bridge_duel"
     _game_mode: str = "bridge_duel"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     current_winstreak: int = 0
     bow_shots: int = 0
@@ -167,7 +169,7 @@ class SkyWarsDuelStats(StatsModel):
     _prefix: str = "sw_duel_"
     _suffix: str = "_mode_sw_duel"
     _game_mode: str = "sw_duel"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     current_winstreak: int = 0
     blocks_placed: int = 0
@@ -191,7 +193,7 @@ class UHCDoubleStats(StatsModel):
     _prefix: str = "uhc_doubles_"
     _suffix: str = "_mode_uhc_doubles"
     _game_mode: str = "uhc_doubles"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     current_winstreak: int = 0
     blocks_placed: int = 0
@@ -217,7 +219,7 @@ class BridgeDoubleStats(StatsModel):
     _prefix: str = "bridge_doubles_"
     _suffix: str = "_mode_bridge_doubles"
     _game_mode: str = "bridge_doubles"
-    _game_modes = game_modes
+    _game_modes: List[str] = game_modes
 
     current_winstreak: int = 0
     blocks_placed: int = 0
