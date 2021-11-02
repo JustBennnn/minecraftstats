@@ -2,30 +2,43 @@
 
 Functions include getting duel and bedwars stats.
 """
-from mojang import MojangAPI
+from __future__ import annotations
+
 import requests
+from mojang import MojangAPI
 from pydantic import BaseModel
-from typing import Any, Dict
 
 from .bedwarsstats import (
     CosmeticBedwarsStats,
+    DuoBedwarsStats,
+    FourVersusFourBedwarsStats,
     OverallBedwarsStats,
-    PracticeBedwarsStats
+    PracticeBedwarsStats,
+    SoloBedwarsStats,
+    SquadBedwarsStats,
+    TrioBedwarsStats
 )
 from .duelstats import (
+    BowDuelStats,
+    BridgeDoubleStats,
     BridgeDuelStats, 
-    ClassicDuelStats, 
+    ClassicDuelStats,
+    ComboDuelStats,
+    OPDoubleStats,
     OPDuelStats, 
     OverallDuelStats, 
     SkyWarsDuelStats, 
-    SumoDuelStats, 
-    UHCDuelStats
+    SumoDuelStats,
+    UHCDoubleStats,
+    UHCDuelStats,
+    UHCMeetupStats
 )
 from .generalstats import (
     GeneralStats
 )
 from .skywarsstats import (
-    OverallSkywarsStats
+    OverallSkywarsStats,
+    SoloSkywarsStats
 )
 from .errors import DataError
 
@@ -56,43 +69,63 @@ def set_api_key(apikey) -> None:
     else:
         raise TypeError(f"Input must be type str, not type {type(apikey).__name__}.")
 
-def get_user_stats() -> Dict[str, Any]:
+def get_user_stats() -> MinecraftStats:
     """Get the user stats with the set username and api key."""
     if username != "" and api_key != "":
         uuid = MojangAPI.get_uuid(username)
         data = requests.get(f"https://api.hypixel.net/player?key={api_key}&uuid={uuid}").json()
         if data["success"] == False:
             raise DataError(f"Unable to retrieve data. Cause: {data['cause']}.")
-        else:
-            data = data["player"]
-            statsData = data["stats"]
-            duelData = statsData["Duels"]
-            bedwarsData = statsData["Bedwars"]
-            bedwarsPracticeData = bedwarsData.get("practice", {})
-            skywarsData = statsData["SkyWars"]
 
-            stats_object = MinecraftStats(
-                general=data,
-                overall_duels=duelData,
-                classic_duels=duelData,
-                op_duels=duelData,
-                uhc_duels=duelData,
-                sumo_duels=duelData,
-                bridge_duels=duelData,
-                skywars_duels=duelData,
-                overall_bedwars=bedwarsData,
-                practice_bedwars=bedwarsPracticeData,
-                cosmetics_bedwars=bedwarsData,
-                overall_skywars=skywarsData
-            )
+        if data["success"] == True and data["player"] == "null":
+            raise DataError(f"Player data is null.")
 
-            return stats_object
+        playerData = data["player"]
+        statsData = playerData["stats"]
+        duelData = statsData["Duels"]
+        bedwarsData = statsData["Bedwars"]
+        bedwarsPracticeData = bedwarsData.get("practice", {})
+        skywarsData = statsData["SkyWars"]
+
+        stats_object = MinecraftStats(
+            general=playerData,
+
+            overall_duels=duelData,
+            classic_duels=duelData,
+            op_duels=duelData,
+            uhc_duels=duelData,
+            sumo_duels=duelData,
+            bridge_duels=duelData,
+            skywars_duels=duelData,
+            uhc_double=duelData,
+            bridge_double=duelData,
+            op_double=duelData,
+            uhc_meetup=duelData,
+            bow_duel=duelData,
+            combo_duel=duelData,
+
+            overall_bedwars=bedwarsData,
+            practice_bedwars=bedwarsPracticeData,
+            cosmetics_bedwars=bedwarsData,
+            solo_bedwars=bedwarsData,
+            duo_bedwars=bedwarsData,
+            trio_bedwars=bedwarsData,
+            squad_bedwars=bedwarsData,
+            fourvfour_bedwars=bedwarsData,
+            
+            overall_skywars=skywarsData,
+            solo_skywars=skywarsData
+        )
+
+        return stats_object
+        
     else:
         raise DataError("Username and/or API key must not be none.")
 
 class MinecraftStats(BaseModel):
     """Container class for all stats."""
     general: GeneralStats
+
     overall_duels: OverallDuelStats
     classic_duels: ClassicDuelStats 
     op_duels: OPDuelStats
@@ -100,7 +133,21 @@ class MinecraftStats(BaseModel):
     sumo_duels: SumoDuelStats
     bridge_duels: BridgeDuelStats
     skywars_duels: SkyWarsDuelStats
+    uhc_double: UHCDoubleStats
+    bridge_double: BridgeDoubleStats
+    op_double: OPDoubleStats
+    uhc_meetup: UHCMeetupStats
+    bow_duel: BowDuelStats
+    combo_duel: ComboDuelStats
+
     overall_bedwars: OverallBedwarsStats
     practice_bedwars: PracticeBedwarsStats
     cosmetics_bedwars: CosmeticBedwarsStats
+    solo_bedwars: SoloBedwarsStats
+    duo_bedwars: DuoBedwarsStats
+    trio_bedwars: TrioBedwarsStats
+    squad_bedwars: SquadBedwarsStats
+    fourvfour_bedwars: FourVersusFourBedwarsStats
+
     overall_skywars: OverallSkywarsStats
+    solo_skywars: SoloSkywarsStats
