@@ -3,13 +3,14 @@
 import datetime
 import math
 from pydantic import BaseModel, Field
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 __all__ = []
 
 class GeneralStats(BaseModel):
     """General Hypixel stats."""
     uuid: str = ""
+
     first_login_object: int = Field(0, alias="firstLogin")
     @property
     def first_login(self) -> datetime.datetime:
@@ -20,7 +21,9 @@ class GeneralStats(BaseModel):
     def latest_login(self) -> datetime.datetime:
         return datetime.datetime.fromtimestamp(self.latest_login_object // 1000)
 
-    achievements: int = Field(0, alias="achievementPoints")
+    one_time_achievements: List[str] = Field([], alias="achievementsOneTime") 
+    achievement_points: int = Field(0, alias="achievementPoints")
+
     most_recent_game_mode_object: str = Field("", alias="mostRecentGameType")
     @property 
     def most_recent_game_mode(self):
@@ -42,3 +45,4 @@ class GeneralStats(BaseModel):
         return math.floor((math.sqrt((2 * self.experience) + 30625) / 50) - 2.5)
 
     karma: int = 0
+    most_recent_game_mode: str = Field("", alias="mostRecentGameType")
