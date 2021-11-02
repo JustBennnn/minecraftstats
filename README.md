@@ -47,7 +47,7 @@ print(list(stats.general.__fields__.keys())) #show all available attributes for 
 
 first_login = stats.general.first_login #returns a datetime object
 print("First login (day/month/year):", str(first_login.day) + "/" + str(first_login.month) + "/" + str(first_login.year))
-print("Achievements:", stats.general.achievements)
+print("Achievements:", stats.general.achievement_points)
 print("Hypixel level:", stats.general.level)
 ```
 
@@ -117,11 +117,37 @@ print("Coins:", stats.overall_skywars.coins)
 
 # CHANGELOG
 
+## 1.1.5
+
+* Skywars stats updates:
+    * Created a Solo Skywars stats class.
+    * Added a Skywars level stat.
+
+* Added more stats to the General stats file.
+
+* Created more efficient models.
+
+* Added the following Bedwars stats classes:
+    * Solo
+    * Duos
+    * Trios
+    * Squads
+    * Four Versus Four
+
+* Added the following Duels stats classes:
+    * OP Doubles
+    * UHC Meetup(Deathmatch)
+
 ## 1.1.4
 
+* The API link now uses the user's uuid instead of player name.
+
 * Created a General Hypixel stats file.
+
 * Removed unnecessary imports from `__init__.py`.
+
 * Updated annotations on several files.
+
 * Added [`mojang`](https://github.com/summer/mojang "") library to `requirements.txt`.
 
 ## 1.1.3
