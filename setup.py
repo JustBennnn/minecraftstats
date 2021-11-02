@@ -2,11 +2,11 @@ from setuptools import setup
 
 setup(
     name="minecraftstats",
-    version="1.1.4",
+    version="1.1.5",
     author="JustBen",
     author_email="justben009@gmail.com",
     description="A python library allowing the user to get stats from Hypixel in Minecraft.",
-    keywords="minecraft api-wrapper".split(),
+    keywords="minecraft api-wrapper mojang mojang-api".split(),
     python_requires=">=3.7",
     packages=["minecraftstats"],
     long_description=open("README.md", "r", encoding="utf-8").read(),
