@@ -24,6 +24,7 @@ from .duelstats import (
     BridgeDuelStats, 
     ClassicDuelStats,
     ComboDuelStats,
+    CTFTrioStats,
     OPDoubleStats,
     OPDuelStats, 
     OverallDuelStats, 
@@ -97,12 +98,13 @@ def get_user_stats() -> MinecraftStats:
             sumo_duels=duelData,
             bridge_duels=duelData,
             skywars_duels=duelData,
-            uhc_double=duelData,
-            bridge_double=duelData,
-            op_double=duelData,
+            uhc_doubles=duelData,
+            bridge_doubles=duelData,
+            op_doubles=duelData,
             uhc_meetup=duelData,
-            bow_duel=duelData,
-            combo_duel=duelData,
+            bow_duels=duelData,
+            combo_duels=duelData,
+            ctf_trios=duelData,
 
             overall_bedwars=bedwarsData,
             practice_bedwars=bedwarsPracticeData,
@@ -133,12 +135,13 @@ class MinecraftStats(BaseModel):
     sumo_duels: SumoDuelStats
     bridge_duels: BridgeDuelStats
     skywars_duels: SkyWarsDuelStats
-    uhc_double: UHCDoubleStats
-    bridge_double: BridgeDoubleStats
-    op_double: OPDoubleStats
+    uhc_doubles: UHCDoubleStats
+    bridge_doubles: BridgeDoubleStats
+    op_doubles: OPDoubleStats
     uhc_meetup: UHCMeetupStats
-    bow_duel: BowDuelStats
-    combo_duel: ComboDuelStats
+    bow_duels: BowDuelStats
+    combo_duels: ComboDuelStats
+    ctf_trios: CTFTrioStats
 
     overall_bedwars: OverallBedwarsStats
     practice_bedwars: PracticeBedwarsStats
