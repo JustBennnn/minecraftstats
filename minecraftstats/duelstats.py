@@ -21,7 +21,8 @@ game_modes = [
     "op_doubles",
     "uhc_meetup",
     "bow_duel",
-    "combo_duel"
+    "combo_duel",
+    "capture_threes"
 ]
 
 class OverallDuelStats(BaseModel):
@@ -309,3 +310,20 @@ class ComboDuelStats(StatsModel):
     melee_hits: int = 0
     melee_swings: int = 0
     games_played: int = Field(0, alias="rounds_played")
+
+class CTFTrioStats(StatsModel):
+    """Capture the flag trios stats."""
+    _prefix: str = "capture_threes_"
+    _game_mode: str = "capture_threes"
+    _game_modes: List[str] = game_modes
+
+    blocks_placed: int = 0
+    bow_shots: int = 0
+    deaths: int = Field(0, alias="bridge_deaths")
+    kills: int = Field(0, alias="bridge_kills")
+    damage_dealt: int = 0 #measured in half hearts
+    losses: int = 0
+    melee_hits: int = 0
+    melee_swings: int = 0
+    games_played: int = Field(0, alias="rounds_played")
+    bow_hits: int = 0
