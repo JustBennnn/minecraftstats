@@ -117,6 +117,10 @@ print("Coins:", stats.overall_skywars.coins)
 
 # CHANGELOG
 
+## 1.1.6
+
+* Capture The Flag Trios Duels stats added.
+
 ## 1.1.5
 
 * Skywars stats updates:
